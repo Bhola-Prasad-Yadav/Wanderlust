@@ -1,0 +1,157 @@
+<% layout("/layouts/boilerplate") %> 
+<body>
+<style>
+  #finters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .filter{
+    text-align: center;
+    margin-right: 2rem;
+    margin-top: 2rem;
+    opacity: 0.7;
+  }
+  .filter:hover{
+    opacity: 1;
+    cursor: pointer;
+    transform: scale(1.1);
+    background-color: #fff;
+  }
+  .filter p {
+    font-size: 0.8rem;
+    margin-top: 0.3rem;
+    font-weight: bold;
+  }
+  .tax-info{
+    display: none;
+  }
+  .tax-toggle{
+    border: 1px solid #000;
+    border-radius: 1rem;
+    height: 3.25rem;
+    padding: 1rem;
+    margin-left: 2rem;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+  }
+  /* Mobile View */
+  @media (max-width: 1200px) {
+    #finters {
+      overflow-x: auto;
+      flex-wrap: nowrap;
+      padding: 0.5rem;
+      gap: 0.5rem;
+      scroll-behavior: smooth;
+      scrollbar-width: thin;
+      scrollbar-color: #ddd #f9f9f9;
+    }
+    #finters::-webkit-scrollbar {
+      height: 0.5rem;
+      background-color: #f9f9f9;
+    }
+    #finters::-webkit-scrollbar-thumb {
+      background-color: #ddd;
+      border-radius: 1rem;
+    }
+    .filter {
+      flex: 0 0 auto;
+      width: 5rem;
+      padding: 0.3rem;
+    }
+    .tax-toggle {
+      margin-left: 0.5rem;
+      padding: 0.5rem;
+      font-size: 0.8rem;
+    }
+  }
+</style>
+  <div id="finters">
+    <div class="filter">
+      <div><i class="fa-solid fa-fire"></i></div>
+      <p>Trending</p>
+    </div>
+    <div class="filter">
+      <div><i class="fa-solid fa-bed"></i></div>
+      <p>Rooms</p>
+    </div>
+    <div class="filter">
+      <div><i class="fa-solid fa-mountain-city"></i></div>
+      <p>Iconic Cities</p>
+    </div>
+    <div class="filter">
+      <div><i class="fa-solid fa-mountain"></i></div>
+      <p>Mountains</p>
+    </div>
+    <div class="filter">
+      <div><i class="fa-solid fa-chess-rook"></i></div>
+      <p>Castles</p>
+    </div>
+    <div class="filter">
+      <div><i class="fa-solid fa-person-swimming"></i></div>
+      <p>Amazing Pools</p>
+    </div>
+    <div class="filter">
+      <div><i class="fa-solid fa-campground"></i></div>
+      <p>Camping</p>
+    </div>
+    <div class="filter">
+      <div><i class="fa-solid fa-cow"></i></div>
+      <p>Farms</p>
+    </div>
+    <div class="filter">
+      <div><i class="fa-regular fa-snowflake"></i></div>
+      <p>Arctic</p>
+    </div>
+    <div class="filter">
+      <div><i class="fa-solid fa-igloo"></i></div>
+      <p>Domes</p>
+    </div>
+    <div class="filter">
+      <div><i class="fa-solid fa-ship"></i></div>
+      <p>Boats</p>
+    </div>
+    <div class="tax-toggle">
+      <div class="form-check-reverse form-switch">
+        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+        <label class="form-check-label" for="flexSwitchCheckDefault">Display Total After Taxes</label>
+      </div>
+    </div>
+  </div>
+  <div class="row row-cols-lg-3 row-cols-md-3 row-cols-sm-2 mt-3">
+    <% for(let listing of allListings) { %>
+      <a href="/listings/<%= listing.id %>" class="listing-link">
+        <div class="card col listing-card">
+          <img
+            src="<%= listing.image.url %>"
+            class="card-img-top"
+            alt="listing_image"
+            style="height: 20rem"
+          />
+          <div class="card-body">
+            <p class="card-text">
+              <b><%= listing.title %></b> <br />
+              &#8377; <%= listing.price.toLocaleString("en-IN") %> / night
+              <i class="tax-info">&nbsp; &nbsp; +18% GST</i>
+            </p>
+          </div>
+        </div>
+      </a>
+    <% } %>
+  </div>
+</body>
+
+<script>
+  let taxSwitch = document.getElementById("flexSwitchCheckDefault");
+  taxSwitch.addEventListener("change", () => {
+    let taxInfo = document.getElementsByClassName("tax-info");
+    for(let info of taxInfo){
+      if(info.style.display != "inline"){
+        info.style.display = "inline";
+      } else {
+        info.style.display = "none";
+      }
+    }
+  });
+</script>
